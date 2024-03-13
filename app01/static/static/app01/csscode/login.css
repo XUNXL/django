@@ -1,0 +1,171 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.element {
+  width: 50vw;
+  /* 元素宽度为视口宽度的50% */
+}
+
+body {
+  background-image: url(green.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.search {
+  position: relative;
+  height: 56px;
+  background-color: white;
+  min-width: 1440px;
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+.name {
+  position: absolute;
+  height: 56px;
+  top: 0;
+  right: 18px;
+}
+
+.name p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 56px;
+  margin-left: 5px;
+  color: rgb(18, 228, 158);
+  font-size: 23px;
+}
+
+.logo {
+  float: left;
+  width: 273px;
+  height: 56px;
+  background-image: url(logo.jpg);
+  background-repeat: no-repeat;
+  background-position: -6px -8px;
+}
+
+.a {
+  float: left;
+  height: 42px;
+  width: 150px;
+  line-height: 40px;
+  padding-left: 10px;
+  margin-left: 10px;
+  border-left-style: solid;
+  border-left-color: aquamarine;
+  font-size: small;
+}
+
+.bigbigbigbox {
+  height: 631px;
+  width: 1471px;
+  margin: 100px auto;
+}
+
+.bigbigbox {
+  float: left;
+  width: 869px;
+  height: 600px;
+  /* margin-left: 100px;
+  margin-top: 100px; */
+  text-align: center;
+  border-right: 2px solid gainsboro;
+}
+
+.bigbigbox h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 400px;
+}
+
+.bigbox {
+  float: left;
+  height: 600px;
+  width: 500px;
+  margin-left: 40px;
+  /* margin-top: 100px; */
+  border-radius: 15px;
+  background-color: rgba(255, 255, 255, 1);
+  border-color: azure;
+}
+
+.main {
+  text-align: center;
+  padding-top: 135px;
+  height: 300px;
+  backdrop-filter: blur(5px);
+}
+
+a {
+  text-decoration: none;
+  color: darkgreen;
+}
+
+form div {
+  height: 60px;
+}
+
+div input {
+  height: 41px;
+  border: 1px solid gainsboro;
+  border-radius: 9px;
+  width: 266px;
+  outline: none;
+}
+
+div input:hover {
+  background-color: azure;
+}
+
+a:hover {
+  color: gray;
+}
+
+
+
+.button input {
+  position: relative;
+  margin-top: 10px;
+  width: 269px;
+  height: 38px;
+  background: #FAFAF5;
+  border-radius: 24px;
+}
+
+.button p {
+  position: absolute;
+  width: 68px;
+  height: 46px;
+  left: 316px;
+  top: 322px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 48px;
+  color: #000000;
+}
+
+.button input:hover {
+  color: white;
+  background-color: #7fffe7;
+}
+
+.reg {
+  padding-top: 152px;
+  width: 200px;
+  padding-left: 293px;
+}
+
+h1 {
+  color: rgb(5, 253, 170);
+  padding-bottom: 20px;
+  text-shadow: 0px 5px 6px rgba(0, 0, 0, .2);
+}

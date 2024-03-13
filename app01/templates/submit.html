@@ -1,17 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="UTF-8">
-    <title>图片上传页面</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片上传</title>
+    <link rel="stylesheet" type="text/css" href="../static/static/app01/csscode/submit.css">
 </head>
+
 <body>
+    <div class="search">
+        <div class="logo"></div>
+        <div class="name">
+            <p>SUBMIT</p>
+        </div>
+    </div>
+    <div class="topbox">
+        <p class="back">Detection</p>
+    </div>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        图片上传：<input type="file" name="image">
-        <input type="submit" value="上传图片">
-    <div>
-        <a href="/index/">返回</a>
-    </div>
+        <div class="mainbox">
+            <!--   左边功能选择栏 -->
+            <div class="SubmitButton" id="SubmitButton">上传图片</div>
+            <!-- 返回按钮 -->
+            <div class="TurnBack">
+                <a href="/index/">Back</a>
+            </div>
+        </div>
+        <!-- 浮动窗口 -->
+        <div class="float_window" id="float_window">
+            <div class="Polygon"></div>
+            <label for="file" class="SelectButton_another">选择文件</label>
+            <input id="file" class="SelectButton" type="file" name="image">
+            <input class="submit" type="submit" value="上传图片">
+        </div>
     </form>
+    <script type="text/javascript" src="../static/static/app01/jscode/submit.js"></script>
 </body>
+
 </html>

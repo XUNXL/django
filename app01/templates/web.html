@@ -1,51 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
-    <meta charset="UTF-8">
-    <title>我的网页</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>用户注册</title>
+  <link rel="stylesheet" type="text/css" href="../static/static/app01/csscode/web.css">
 </head>
+
 <body>
-    <h1>用户注册</h1>
-    <form method="post" action="/register/">
+  <div class="search">
+    <div class="logo"></div>
+    <div class="name">
+      <p>SIGN UP</p>
+    </div>
+  </div>
+  <div class="bigbigbox">
+    <div class="bigbox1">
+
+    </div>
+
+    <div class="bigbox2">
+      <h1>用户注册</h1>
+      <form method="post" action="/register/">
 
         {% csrf_token %}
 
-        <div>
-            用户名：{{form.username}}
-            <span style="color:red;">{{form.username.errors.0}}</span>
+        <div class="div">
+          {{form.username}}
+          <span style="color:red;">{{form.username.errors.0}}</span>
         </div>
 
-        <div>
-            手机号：{{form.mobile}}
-            <span style="color:red;">{{form.password.errors.0}}</span>
+        <div class="div">
+          {{form.mobile}}
+          <span style="color:red;">{{form.password.errors.0}}</span>
         </div>
 
-        <div>
-            密码：{{form.password}}
-            <span style="color:red;">{{form.password.errors.0}}</span>
+        <div class="div">
+          {{form.password}}
+          <span style="color:red;">{{form.password.errors.0}}</span>
+        </div>
+        <div class="Password_Reminder" id="Password_Reminder"></div>
+        <div class="div">
+          {{form.confirm_password}}
+          <span style="color:red;">{{form.confirm_password.errors.0}}</span>
+        </div>
+        <div class="confirm_password" id="confirm_password"></div>
+
+        <div class="div">
+          {{form.birthdate}}
+          <span style="color:red;">{{form.username.errors.0}}</span>
+        </div>
+        <div class="birthday" id="birthday"></div>
+
+        <div class="gender">
+          {{form.gender}}
+          <span style="color:red;">{{form.username.errors.0}}</span>
         </div>
 
-        <div>
-            确认密码：{{form.confirm_password}}
-            <span style="color:red;">{{form.confirm_password.errors.0}}</span>
+        <div class="div">
+          <input class="button" type="submit" value="注册">
         </div>
 
-        <div>
-            性别：{{form.gender}}
-            <span style="color:red;">{{form.username.errors.0}}</span>
-        </div>
-
-        <div>
-            出生日期：{{form.birthdate}}
-            <span style="color:red;">{{form.username.errors.0}}</span>
-        </div>
-
-        <div>
-            <input type="submit" value="注册">
-        </div>
-
-    </form>
-
-
+      </form>
+    </div>
+  </div>
+  <script type="text/javascript" src="../static/static/app01/jscode/web.js"></script>
 </body>
+
 </html>

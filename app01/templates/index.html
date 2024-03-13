@@ -1,27 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>青目助诊-首页</title>
+    <link rel="stylesheet" type="text/css" href="../static/static/app01/csscode/index.css">
+    <!-- <style>
+        @font-face {
+            font-family: 'icomoon';
+            src: url('fonts/icomoon.eot?3nyzh6');
+            src: url('fonts/icomoon.eot?3nyzh6#iefix') format('embedded-opentype'),
+                url('fonts/icomoon.ttf?3nyzh6') format('truetype'),
+                url('fonts/icomoon.woff?3nyzh6') format('woff'),
+                url('fonts/icomoon.svg?3nyzh6#icomoon') format('svg');
+            font-weight: normal;
+            font-style: normal;
+            font-display: block;
+        }
+    </style> -->
 </head>
+
 <body>
-    <h1>{{ username }}你好，欢迎回来</h1>
-
-    <div>
-        <a href="/userinfo/">我的信息</a>
+    <div class="search">
+        <div class="logo"></div>
+        <div class="name">
+            <p>青光眼辅助诊断系统</p>
+        </div>
     </div>
-
-    <div>
-        <a href="/upload/">上传照片</a>
+    <div class="topbox">
+        <p class="back">Welcome</p>
+        <p class="user">user:{{ username }}</p>
     </div>
-
-    <div>
-        <a href="/introduction/">使用教程</a>
+    <div class="mainbox">
+        <div class="smallbox4">
+            <div>
+                <a class="name4" href="/userinfo/">我的信息</a>
+                <p class="line"> __________________________ <br>
+                    __________________________ <br>
+                    __________________________ <br>
+                    __________________________ <br>
+                    __________________________ <br>
+                    __________________________ <br>
+                </p>
+            </div>
+        </div>
+        <div class="smallbox2">
+            <div>
+                <a class="name2" href="/submit/">上传照片</a>
+            </div>
+        </div>
+        <div class="smallbox1">
+            <div>
+                <a class="name1" href="/introduction/">使用教程</a>
+            </div>
+        </div>
+        <div class="smallbox3">
+            <div>
+                <a class="name3" href="/userlog/">诊断记录</a>
+            </div>
+        </div>
     </div>
-
-    <div>
-        <a href="/upload/">诊断记录</a>
-    </div>
-
 </body>
+
 </html>

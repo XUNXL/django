@@ -1,0 +1,174 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.search {
+    position: relative;
+    height: 56px;
+    min-width: 1500px;
+    background-color: white;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+.name {
+    position: absolute;
+    height: 56px;
+    top: 0;
+    right: 18px;
+}
+
+.name p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 56px;
+    margin-left: 5px;
+    color: rgb(18, 228, 158);
+    font-size: 23px;
+}
+
+.logo {
+    float: left;
+    width: 273px;
+    height: 56px;
+    background-image: url(logo.jpg);
+    background-repeat: no-repeat;
+    background-position: -6px -8px;
+}
+
+.topbox {
+    position: absolute;
+    height: 93px;
+    left: 0px;
+    right: 0px;
+    top: 112px;
+    background: #FFFFFF;
+    min-width: 1500px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+}
+
+.back {
+    position: absolute;
+    width: 1000px;
+    height: 77px;
+    left: 96px;
+    top: 0px;
+
+    font-family: 'Newsreader';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 64px;
+    line-height: 120%;
+    /* identical to box height, or 77px */
+    display: flex;
+    align-items: flex-end;
+    letter-spacing: -0.02em;
+
+    color: #000000;
+}
+
+.main_box {
+    position: relative;
+    margin: 200px auto;
+    min-height: 200px;
+    width: 1000px;
+    border-radius: 12px;
+    border: 1px solid rgb(230, 235, 235);
+    background-color: rgb(249, 253, 253);
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+}
+
+.history_record {
+    width: 900px;
+    margin: 20px auto;
+    margin-bottom: 115px;
+}
+
+.history_record caption {
+    color: cadetblue;
+    font-size: 30px;
+    height: 70px;
+    border-bottom: 1px solid rgb(212, 210, 210);
+}
+
+.history_record thead tr th {
+    color: cadetblue;
+    font-size: 25px;
+}
+
+tbody tr {
+    height: 86px;
+    margin-top: 20px;
+}
+
+tbody tr td {
+    color: cadetblue;
+    font-size: 20px;
+    text-align: center;
+}
+
+.delete_button {
+    height: 34px;
+    width: 69px;
+    border: none;
+    border-radius: 12px;
+    background-color: rgb(168, 247, 220);
+    color: white;
+    font-weight: 800;
+    font-size: 17px;
+    transition: background-color 0.3s ease;
+}
+
+.delete_all_button {
+    color: rgb(226, 209, 209);
+    font-weight: 800;
+    font-size: 17px;
+    background-color: rgb(249, 253, 253);
+    border: none;
+}
+
+.delete_button:hover {
+    background-color: rgb(86, 247, 193);
+    border: 0.5px solid rgb(87, 224, 248);
+    color: rgb(245, 248, 250);
+}
+
+.delete_all_button:hover {
+    color: rgb(197, 168, 168);
+}
+
+.turnback {
+    position: absolute;
+    width: 151px;
+    height: 49px;
+    right: 85px;
+    bottom: 10px;
+    background-color: rgb(209, 240, 230);
+    border: none;
+    color: #426B1F;
+    font-size: 20px;
+    border-radius: 12px;
+    transition: background-color 0.3s ease;
+}
+
+
+.recycle {
+    position: absolute;
+    width: 151px;
+    height: 49px;
+    top: 100px;
+    right: -213px;
+    background-color: rgb(209, 240, 230);
+    border: none;
+    color: #426B1F;
+    font-size: 16px;
+    border-radius: 12px;
+    transition: background-color 0.3s ease;
+}
+
+.turnback:hover,
+.recycle:hover {
+    background-color: rgb(243, 157, 197);
+}

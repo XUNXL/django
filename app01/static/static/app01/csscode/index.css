@@ -1,0 +1,220 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.search {
+    position: relative;
+    height: 56px;
+    background-color: white;
+    min-width: 1500px;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+.name {
+    position: absolute;
+    height: 56px;
+    top: 0;
+    right: 18px;
+}
+
+.name p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 56px;
+    margin-left: 5px;
+    color: rgb(18, 228, 158);
+    font-size: 23px;
+}
+
+.logo {
+    float: left;
+    width: 273px;
+    height: 56px;
+    background-image: url(logo.jpg);
+    background-repeat: no-repeat;
+    background-position: -6px -8px;
+}
+
+.topbox {
+    position: absolute;
+    height: 93px;
+    left: 0px;
+    right: 0px;
+    top: 112px;
+    min-width: 1500px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+}
+
+.back {
+    position: absolute;
+    width: 1000px;
+    height: 77px;
+    left: 96px;
+    top: 0px;
+
+    font-family: 'Newsreader';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 64px;
+    line-height: 120%;
+    /* identical to box height, or 77px */
+    display: flex;
+    align-items: flex-end;
+    letter-spacing: -0.02em;
+
+    color: #000000;
+}
+
+.user {
+    position: absolute;
+    width: 300px;
+    height: 26px;
+    left: 400px;
+    top: 0px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 130%;
+    /* identical to box height, or 26px */
+    display: flex;
+    align-items: flex-end;
+
+    color: #000000;
+}
+
+.mainbox {
+    position: relative;
+    width: 1248px;
+    height: 539px;
+    margin: 228px auto;
+    background-color: white;
+}
+
+.smallbox1 {
+    box-sizing: border-box;
+    position: relative;
+    height: 159px;
+    width: 821px;
+    background: #FAFAF5;
+    border: 2px solid #E6E6E6;
+    border-radius: 24px;
+    background-image: url(book.jpg);
+    background-position: -20px;
+    background-repeat: no-repeat;
+    transition: transform 0.3s ease;
+}
+
+.name1,
+.name2,
+.name3 {
+    position: absolute;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 34px;
+    line-height: 130%;
+    color: #426B1F;
+    text-decoration: none;
+    left: 210px;
+    top: 57px;
+}
+
+.name4 {
+    position: absolute;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 34px;
+    line-height: 130%;
+    color: #426B1F;
+    text-decoration: none;
+    left: 44px;
+    top: 29px;
+}
+
+.line {
+    position: absolute;
+    display: block;
+    color: #426B1F;
+    font-weight: 600;
+    font-size: 26px;
+    left: 45px;
+    top: 65px;
+}
+
+.smallbox2 {
+    box-sizing: border-box;
+    position: absolute;
+    height: 159px;
+    left: 0px;
+    top: 191px;
+    width: 821px;
+    background: #FAFAF5;
+    border: 2px solid #E6E6E6;
+    border-radius: 24px;
+    background-image: url(camera.jpg);
+    background-position: -91px;
+    background-repeat: no-repeat;
+    transition: transform 0.3s ease;
+}
+
+.smallbox3 {
+    box-sizing: border-box;
+    position: absolute;
+    height: 159px;
+    left: 0px;
+    bottom: 0px;
+    width: 821px;
+    background: #FAFAF5;
+    border: 2px solid #E6E6E6;
+    border-radius: 24px;
+    background-image: url(pink.jpg);
+    background-position: -20px;
+    background-repeat: no-repeat;
+    transition: transform 0.3s ease;
+}
+
+.smallbox4 {
+    box-sizing: border-box;
+    position: absolute;
+    height: 318px;
+    right: 0px;
+    top: 0px;
+    width: 395px;
+    background: #FAFAF5;
+    border: 2px solid #E6E6E6;
+    border-radius: 24px;
+    transition: transform 0.3s ease;
+}
+
+.name1:hover,
+.name2:hover,
+.name3:hover,
+.name4:hover {
+    color: aquamarine;
+}
+
+@keyframes jump {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.smallbox1:hover,
+.smallbox2:hover,
+.smallbox3:hover,
+.smallbox4:hover {
+    animation: jump 0.5s;
+}

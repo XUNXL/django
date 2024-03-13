@@ -1,12 +1,16 @@
 import requests
+from django.contrib.auth import logout
 from django.shortcuts import render,HttpResponse,redirect
 from django import forms
 from django.core.exceptions import ValidationError
 from app01 import models
-from app01.models import UserInfo
+from app01.models import UserInfo,UserLog
 from app01.utils.encrypt import md5
-import torch
-from torch_model.run import Trainer
+from my_functions.Predict import run_predict
+from my_functions.calculate import calculate_age
+import datetime
+import shutil
+# from torch_model.run import Trainer
 # Create your views here.
 
 class RegisterForm(forms.Form):
@@ -40,12 +44,11 @@ class RegisterForm(forms.Form):
     gender = forms.ChoiceField(
         label='性别',
         widget=forms.RadioSelect,
-        choices=gender_choices,
-        required=True
+        choices=gender_choices
     )
     birthdate = forms.DateField(
         label='出生日期',
-        widget=forms.DateInput,
+        widget=forms.DateInput(attrs={'type':'date'}),
         required=True
     )
     def clean_confirm_password(self):
@@ -95,7 +98,7 @@ def register(request):
             return render(request,'web.html',{'form':form})
         else:
             UserInfo.objects.create(username=username, password=md5(password), mobile=mobile,gender=gender,birthdate=birthdate)
-            return redirect("/login/")
+            return render(request,"reg.html")
     return render(request,'web.html',{'form':form})
 
 def login(request):
@@ -117,14 +120,16 @@ def login(request):
 
 def userinfo(request):
     info = request.session.get("info")
+    form = LoginForm()
     if not info:
         return render(request, 'login.html', {'form': form})
     username = info["username"]
     login_object = UserInfo.objects.filter(username=username).first()
     birthdate = login_object.birthdate
     gender = "男" if login_object.gender == 1 else "女"
+    age = calculate_age(birthdate)
     mobile = login_object.mobile
-    return render(request,'userinfo.html',{"username":username,"gender":gender,"birthdate":birthdate,"mobile":mobile})
+    return render(request,'userinfo.html',{"username":username,"gender":gender,"birthdate":birthdate,"mobile":mobile,"age":age})
 
 def upload(request):
     info = request.session.get("info")
@@ -132,17 +137,56 @@ def upload(request):
         return redirect("/login/")
     if request.method == 'GET':
         return render(request,'submit.html')
+        #return redirect("/upload/")
     username = info["username"]
-    f = open('./userimg/'+username+'.tif',mode='wb')
+    f = open('./app01/static/images/'+username+'.jpg',mode='wb')
     file_object = request.FILES.get('image')
     for chunk in file_object.chunks():
         f.write(chunk)
     f.close()
-    t = Trainer("./userimg", './torch_model/model.pt', './torch_model/model_{}_{}.pt', img_save_path=r'./app01/templates/static')
-    t.segment(username+'.tif',username + '_result')
-    return render(request, 'results.html',{"username":username})
+    # print("process")
+    probablistic,class_result,predict_entropy,max_mean_pro = run_predict("./app01/static/images/"+username+".jpg","./app01/static/images/"+username+"_result.jpg")
+    print(probablistic)
+    print(class_result)
+    time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    if predict_entropy > 0.5048 or max_mean_pro < 0.8 :
+        trust = 'NO'
+    else :
+        trust = 'YES'
+    UserLog.objects.create(username=username,logtime=time,class_result=class_result,probablistic=probablistic,trust=trust)
+    if class_result == 'Glaucoma':
+        class_result = '您有比较大的概率患有青光眼，请及时前往医院就诊'
+    elif class_result == 'Normal':
+        class_result = '恭喜您，您的眼球健康状况良好'
+    if trust == 'NO':
+        shutil.copy('./app01/static/images/'+username+'.jpg','./app01/saveimg/distrust/'+username+datetime.datetime.now().strftime('%Y%m%d%H%M%S')+'.jpg')
+        return render(request, 'result2.html', {"username": username})
+    else :
+        shutil.copy('./app01/static/images/'+ username + '.jpg',
+                    './app01/saveimg/trust/' + username + datetime.datetime.now().strftime('%Y%m%d%H%M%S') + '.jpg')
+        return render(request, 'results.html',
+                      {"username": username, "probablistic": round(probablistic, 4), "class_result": class_result})
+    # t = Trainer("./userimg", './torch_model/model.pt', './torch_model/model_{}_{}.pt', img_save_path=r'./app01/templates/static')
+    #t.segment(username+'.tif',username + '_result')
+
+def log_information(request):
+    info = request.session.get("info")
+    if not info:
+        return redirect("/login/")
+    username = info["username"]
+    print(username)
+    queryset = UserLog.objects.filter(username=username).all()
+    return render(request, 'userlog.html', {"queryset": queryset})
+
+
 
 def introduction(request):
     return render(request,'introduction.html')
+
+
+def my_logout(request):
+    logout(request)
+    return redirect("/login/")
+
 
 

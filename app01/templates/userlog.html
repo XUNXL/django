@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>检测记录</title>
+    <link rel="stylesheet" type="text/css" href="../static/static/app01/csscode/userlog.css">
+</head>
+
+<body>
+    <div class="search">
+        <div class="logo"></div>
+        <div class="name">
+            <p>RECORD</p>
+        </div>
+    </div>
+    <div class="topbox">
+        <p class="back">History</p>
+    </div>
+    <div class="main_box">
+        <table class="history_record" id="history_record">
+            <caption>检测记录</caption>
+            <thead>
+                <tr>
+                    <th id="data">检测日期</th>
+                    <th id="result">诊断结果</th>
+                    <th id="possibility">预测概率</th>
+                    <th id="true_or_false">是否可信</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for obj in queryset %}
+                <tr>
+                    <td>{{ obj.logtime }}</td>
+                    <td>{{ obj.class_result }}</td>
+                    <td>{{ obj.probablistic }}</td>
+                    <td>{{ obj.trust }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button class="turnback">Back</button>
+    </div>
+    <script>
+        const back = document.querySelector(".turnback");
+        back.addEventListener('click', function () {
+            window.location.href = '/index/';
+        });
+    </script>
+</body>
+
+</html>

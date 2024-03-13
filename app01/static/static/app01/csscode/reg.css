@@ -1,0 +1,44 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+h1 {
+    color: rgb(178, 179, 180);
+    font-size: 400%;
+    font-family: fantasy;
+}
+
+.success {
+    top: 24%;
+    left: 42%;
+}
+
+.back {
+    width: 10%;
+    height: 10%;
+    background-color: rgb(238, 241, 243);
+    border-radius: 24px;
+    transition: background-color 0.3s ease;
+}
+
+a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    font-weight: 700;
+    font-size: 150%;
+    text-decoration: none;
+}
+
+.back:hover {
+    background-color: rgb(226, 236, 243);
+}
