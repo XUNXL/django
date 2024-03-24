@@ -86,10 +86,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'user',
-        'USER':'root',
-        'PASSWORD':'123456',
-        'HOST':'127.0.0.1',
-        'POST':3306
+        'USER': 'root',
+        'PASSWORD': '123456',
+        'HOST': '127.0.0.1',
+        'POST': 3306
     }
 }
 
@@ -130,11 +130,10 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static').replace('\\', '/'),
+    # os.path.join(BASE_DIR, 'static').replace('\\', '/'),
 )
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-

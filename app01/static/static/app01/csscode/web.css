@@ -4,7 +4,7 @@
 }
 
 body {
-    background-image: url(green.jpg);
+    /* background-image: url(green.jpg); */
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -44,95 +44,127 @@ body {
     background-position: -6px -8px;
 }
 
-.bigbigbox {
-    position: relative;
-    width: 1000px;
-    height: 700px;
-    margin: 100px auto;
-    background-color: white;
-    border-radius: 24px;
-}
-
-.bigbox1 {
-    position: absolute;
-    width: 500px;
-    height: 700px;
-    background-image: url(register.jpg);
-    background-position: -387px -1515px;
-    background-repeat: no-repeat;
-    border-radius: 24px;
+.bigbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 .bigbox2 {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 500px;
-    height: 700px;
-    border-radius: 24px;
+    text-align: center;
+    width: 360px;
+    height: auto;
+    background-color: rgb(252, 255, 252);
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
-form .div {
-    height: 60px;
-}
-
-.sex {
-    margin-top: 13px;
-}
-
-.input {
-    height: 41px;
-    border: 1px solid gainsboro;
-    border-radius: 9px;
-    width: 266px;
-    outline: none;
-}
-
-.input:hover {
-    background-color: azure;
-}
-
-h1 {
+.main {
+    display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center;
-    color: aqua;
-    padding-top: 40px;
-    text-shadow: 0px 5px 6px rgba(0, 0, 0, .2);
+    height: 500px;
 }
 
-form {
-    margin: 30px 116px;
+.group {
+    display: flex;
+    line-height: 28px;
+    align-items: center;
+    position: relative;
+    max-width: 240px;
+    margin-top: 20px;
+}
+
+#id_username,
+#id_password,
+#id_mobile,
+#id_confirm_password {
+
+
+    width: 100%;
+    height: 40px;
+    line-height: 28px;
+    padding: 0 1rem;
+    padding-left: 2.5rem;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    outline: none;
+    background-color: #f3f3f4;
+    color: #0d0c22;
+    transition: .3s ease;
+}
+
+#id_username::placeholder,
+#id_password::placeholder,
+#id_mobile::placeholder,
+#id_confirm_password::placeholder {
+    color: #9e9ea7;
+}
+
+#id_username:focus,
+#id_username:hover,
+#id_password:focus,
+#id_password:hover,
+#id_mobile:focus,
+#id_mobile:hover,
+#id_confirm_password:focus,
+#id_confirm_password:hover {
+    outline: none;
+    border-color: rgba(58, 204, 29, 0.4);
+    background-color: #fefffd;
+    box-shadow: 0 0 0 4px rgb(234 76 137 / 10%);
+}
+
+.bi-eye-slash-fill,
+.bi-person-fill,
+.bi-2-circle-fill,
+.bi-phone {
+    position: absolute;
+    left: 1rem;
+    width: 1rem;
+    height: 1rem;
+}
+
+#id_gender {
+    display: flex;
+}
+
+#id_gender div {
+    margin-right: 60px;
+}
+
+.submit {
+    margin-top: 20px;
 }
 
 .button {
+    width: 240px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 0px 15px;
+    background-color: rgb(140, 233, 103);
+    border-radius: 10px;
+    color: white;
+    border: none;
     position: relative;
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: 500;
-    color: dimgray;
-    font-size: large;
-    background: #FAFAF5;
-    width: 266px;
-    height: 42px;
-    border-radius: 28px;
-    margin-top: 30px;
-    border: 1px solid gainsboro;
-    outline: none;
+    cursor: pointer;
+    transition-duration: .4s;
 }
 
 .button:hover {
-    color: white;
-    background-color: #7fffe7;
+    background-color: rgb(235, 166, 166);
+    transition-duration: .2s;
 }
 
-/* 密码提示信息 */
-.Password_Reminder,
-.confirm_password,
-.birthday {
-    height: 21px;
-    width: 150px;
-    margin-top: -16px;
-    margin-bottom: 15px;
-    margin-left: 165px;
-    font-size: 10px;
+.button:hover .arrow {
+    animation: slide-right .6s ease-out both;
+}
+
+.button:active {
+    transform: translate(1px, 1px);
+    transition-duration: .2s;
 }

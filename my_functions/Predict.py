@@ -4,13 +4,13 @@ import torch.backends
 from torch.nn import CrossEntropyLoss
 from torchvision.models import vgg16
 from torchvision.transforms import transforms
-from baal.bayesian.dropout import patch_module
-from baal import ModelWrapper
+# from baal.bayesian.dropout import patch_module
+# from baal import ModelWrapper
 
 import numpy as np
 import matplotlib.pyplot as plt
 import os
-from PIL import Image
+# from PIL import Image
 import json
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")

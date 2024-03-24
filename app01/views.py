@@ -1,10 +1,10 @@
 import requests
 from django.contrib.auth import logout
-from django.shortcuts import render,HttpResponse,redirect
+from django.shortcuts import render, HttpResponse, redirect
 from django import forms
 from django.core.exceptions import ValidationError
 from app01 import models
-from app01.models import UserInfo,UserLog
+from app01.models import UserInfo, UserLog
 from app01.utils.encrypt import md5
 from my_functions.Predict import run_predict
 from my_functions.calculate import calculate_age
@@ -12,6 +12,7 @@ import datetime
 import shutil
 # from torch_model.run import Trainer
 # Create your views here.
+
 
 class RegisterForm(forms.Form):
     username = forms.CharField(
@@ -48,15 +49,17 @@ class RegisterForm(forms.Form):
     )
     birthdate = forms.DateField(
         label='出生日期',
-        widget=forms.DateInput(attrs={'type':'date'}),
+        widget=forms.DateInput(attrs={'type': 'date'}),
         required=True
     )
+
     def clean_confirm_password(self):
         pwd = self.cleaned_data.get('password')
         confirm = self.cleaned_data.get('confirm_password')
-        if pwd != confirm :
+        if pwd != confirm:
             raise ValidationError("两次输入密码不一致")
         return confirm
+
 
 class LoginForm(forms.Form):
     username = forms.CharField(
@@ -72,17 +75,10 @@ class LoginForm(forms.Form):
     )
 
 
-
-def index(request):
-    info = request.session.get("info")
-    username = info["username"]
-    return render(request,'index.html',{'username':username})
-
-
 def register(request):
     if request.method == "GET":
         form = RegisterForm()
-        return render(request, 'web.html',{'form':form})
+        return render(request, 'web.html', {'form': form})
     form = RegisterForm(data=request.POST)
     if form.is_valid():
         print(request.POST)
@@ -95,28 +91,33 @@ def register(request):
         register_object = UserInfo.objects.filter(username=username).first()
         if register_object:
             form.add_error("username", "用户名已存在！")
-            return render(request,'web.html',{'form':form})
+            return render(request, 'web.html', {'form': form})
         else:
-            UserInfo.objects.create(username=username, password=md5(password), mobile=mobile,gender=gender,birthdate=birthdate)
-            return render(request,"reg.html")
-    return render(request,'web.html',{'form':form})
+            UserInfo.objects.create(username=username, password=md5(
+                password), mobile=mobile, gender=gender, birthdate=birthdate)
+            return render(request, "reg.html")
+    return render(request, 'web.html', {'form': form})
+
 
 def login(request):
     if request.method == 'GET':
         form = LoginForm()
-        return render(request,'login.html',{'form':form})
+        return render(request, 'login.html', {'form': form})
     form = LoginForm(data=request.POST)
     if form.is_valid():
         print(form.cleaned_data)
         username = request.POST['username']
         password = request.POST['password']
-        login_object = UserInfo.objects.filter(username=username, password=md5(password)).first()
+        login_object = UserInfo.objects.filter(
+            username=username, password=md5(password)).first()
         if not login_object:
-            form.add_error("password","用户名或密码错误")
-            return render(request,'login.html',{'form':form})
-        request.session["info"] = {'username':login_object.username,'mobile':login_object.mobile}
-        return redirect("/index/")
-    return render(request,'login.html',{'form':form})
+            form.add_error("password", "用户名或密码错误")
+            return render(request, 'login.html', {'form': form})
+        request.session["info"] = {
+            'username': login_object.username, 'mobile': login_object.mobile}
+        return redirect("/introduction/")
+    return render(request, 'login.html', {'form': form})
+
 
 def userinfo(request):
     info = request.session.get("info")
@@ -126,48 +127,54 @@ def userinfo(request):
     username = info["username"]
     login_object = UserInfo.objects.filter(username=username).first()
     birthdate = login_object.birthdate
-    gender = "男" if login_object.gender == 1 else "女"
+    gender = "♂" if login_object.gender == 1 else "♀"
     age = calculate_age(birthdate)
     mobile = login_object.mobile
-    return render(request,'userinfo.html',{"username":username,"gender":gender,"birthdate":birthdate,"mobile":mobile,"age":age})
+    return render(request, 'index.html', {"username": username, "gender": gender, "birthdate": birthdate, "mobile": mobile, "age": age})
+
 
 def upload(request):
     info = request.session.get("info")
     if not info:
         return redirect("/login/")
     if request.method == 'GET':
-        return render(request,'submit.html')
-        #return redirect("/upload/")
+        username = info["username"]
+        return render(request, 'submit.html', {"username": username})
+        # return redirect("/upload/")
     username = info["username"]
-    f = open('./app01/static/images/'+username+'.jpg',mode='wb')
+    f = open('./app01/static/images/'+username+'.jpg', mode='wb')
     file_object = request.FILES.get('image')
     for chunk in file_object.chunks():
         f.write(chunk)
     f.close()
     # print("process")
-    probablistic,class_result,predict_entropy,max_mean_pro = run_predict("./app01/static/images/"+username+".jpg","./app01/static/images/"+username+"_result.jpg")
+    probablistic, class_result, predict_entropy, max_mean_pro = run_predict(
+        "./app01/static/images/"+username+".jpg", "./app01/static/images/"+username+"_result.jpg")
     print(probablistic)
     print(class_result)
     time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    if predict_entropy > 0.5048 or max_mean_pro < 0.8 :
+    if predict_entropy > 0.5048 or max_mean_pro < 0.8:
         trust = 'NO'
-    else :
+    else:
         trust = 'YES'
-    UserLog.objects.create(username=username,logtime=time,class_result=class_result,probablistic=probablistic,trust=trust)
+    UserLog.objects.create(username=username, logtime=time,
+                           class_result=class_result, probablistic=probablistic, trust=trust)
     if class_result == 'Glaucoma':
         class_result = '您有比较大的概率患有青光眼，请及时前往医院就诊'
     elif class_result == 'Normal':
         class_result = '恭喜您，您的眼球健康状况良好'
     if trust == 'NO':
-        shutil.copy('./app01/static/images/'+username+'.jpg','./app01/saveimg/distrust/'+username+datetime.datetime.now().strftime('%Y%m%d%H%M%S')+'.jpg')
+        shutil.copy('./app01/static/images/'+username+'.jpg', './app01/saveimg/distrust/' +
+                    username+datetime.datetime.now().strftime('%Y%m%d%H%M%S')+'.jpg')
         return render(request, 'result2.html', {"username": username})
-    else :
-        shutil.copy('./app01/static/images/'+ username + '.jpg',
+    else:
+        shutil.copy('./app01/static/images/' + username + '.jpg',
                     './app01/saveimg/trust/' + username + datetime.datetime.now().strftime('%Y%m%d%H%M%S') + '.jpg')
         return render(request, 'results.html',
                       {"username": username, "probablistic": round(probablistic, 4), "class_result": class_result})
     # t = Trainer("./userimg", './torch_model/model.pt', './torch_model/model_{}_{}.pt', img_save_path=r'./app01/templates/static')
-    #t.segment(username+'.tif',username + '_result')
+    # t.segment(username+'.tif',username + '_result')
+
 
 def log_information(request):
     info = request.session.get("info")
@@ -176,17 +183,23 @@ def log_information(request):
     username = info["username"]
     print(username)
     queryset = UserLog.objects.filter(username=username).all()
-    return render(request, 'userlog.html', {"queryset": queryset})
-
+    return render(request, 'userlog.html', {"queryset": queryset, "username": username})
 
 
 def introduction(request):
-    return render(request,'introduction.html')
+    info = request.session.get("info")
+    form = LoginForm()
+    if not info:
+        return render(request, 'login.html', {'form': form})
+    username = info["username"]
+    login_object = UserInfo.objects.filter(username=username).first()
+    birthdate = login_object.birthdate
+    gender = "♂" if login_object.gender == 1 else "♀"
+    age = calculate_age(birthdate)
+    mobile = login_object.mobile
+    return render(request, 'introduction.html', {"username": username, "gender": gender, "birthdate": birthdate, "mobile": mobile, "age": age})
 
 
 def my_logout(request):
     logout(request)
     return redirect("/login/")
-
-
-
