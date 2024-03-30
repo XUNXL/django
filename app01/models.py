@@ -11,10 +11,16 @@ class UserInfo(models.Model):
     gender = models.SmallIntegerField(choices=gender_choice)
     birthdate = models.DateField()
 
+class AdminInfo(models.Model):
+    username = models.CharField(max_length=32)
+    password = models.CharField(max_length=64)
+
+
 class UserLog(models.Model):
     username = models.CharField(max_length=32)
     class_result = models.CharField(max_length=32)
     probablistic = models.FloatField()
     logtime = models.DateTimeField()
     trust = models.CharField(max_length=32)
+    timesss = models.CharField(max_length=32)
 # Create your models here.

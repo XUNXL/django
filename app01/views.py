@@ -4,7 +4,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django import forms
 from django.core.exceptions import ValidationError
 from app01 import models
-from app01.models import UserInfo, UserLog
+from app01.models import UserInfo, UserLog, AdminInfo
 from app01.utils.encrypt import md5
 from my_functions.Predict import run_predict
 from my_functions.calculate import calculate_age
@@ -62,6 +62,19 @@ class RegisterForm(forms.Form):
 
 
 class LoginForm(forms.Form):
+    username = forms.CharField(
+        label='用户名',
+        widget=forms.TextInput,
+        required=True
+    )
+    password = forms.CharField(
+        label='密码',
+        min_length=6,
+        widget=forms.PasswordInput,
+        required=True
+    )
+
+class AdminLoginForm(forms.Form):
     username = forms.CharField(
         label='用户名',
         widget=forms.TextInput,
@@ -153,23 +166,24 @@ def upload(request):
     print(probablistic)
     print(class_result)
     time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    timesss = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
     if predict_entropy > 0.5048 or max_mean_pro < 0.8:
-        trust = 'NO'
+        trust = 'distrust'
     else:
-        trust = 'YES'
+        trust = 'trust'
     UserLog.objects.create(username=username, logtime=time,
-                           class_result=class_result, probablistic=probablistic, trust=trust)
+                           class_result=class_result, probablistic=probablistic, trust=trust, timesss=timesss)
     if class_result == 'Glaucoma':
         class_result = '您有比较大的概率患有青光眼，请及时前往医院就诊'
     elif class_result == 'Normal':
         class_result = '恭喜您，您的眼球健康状况良好'
-    if trust == 'NO':
+    if trust == 'distrust':
         shutil.copy('./app01/static/images/'+username+'.jpg', './app01/saveimg/distrust/' +
-                    username+datetime.datetime.now().strftime('%Y%m%d%H%M%S')+'.jpg')
+                    username + timesss + '.jpg')
         return render(request, 'result2.html', {"username": username})
     else:
         shutil.copy('./app01/static/images/' + username + '.jpg',
-                    './app01/saveimg/trust/' + username + datetime.datetime.now().strftime('%Y%m%d%H%M%S') + '.jpg')
+                    './app01/saveimg/trust/' + username + timesss + '.jpg')
         return render(request, 'results.html',
                       {"username": username, "probablistic": round(probablistic, 4), "class_result": class_result})
     # t = Trainer("./userimg", './torch_model/model.pt', './torch_model/model_{}_{}.pt', img_save_path=r'./app01/templates/static')
@@ -203,3 +217,31 @@ def introduction(request):
 def my_logout(request):
     logout(request)
     return redirect("/login/")
+
+
+def adminlogin(request):
+    if request.method == 'GET':
+        form = AdminLoginForm()
+        return render(request, 'adminlogin.html', {'form': form})
+    form = AdminLoginForm(data=request.POST)
+    if form.is_valid():
+        print(form.cleaned_data)
+        username = request.POST['username']
+        password = request.POST['password']
+        login_object = AdminInfo.objects.filter(
+            username=username, password=password).first()
+        if not login_object:
+            form.add_error("password", "用户名或密码错误")
+            return render(request, 'adminlogin.html', {'form': form})
+        return redirect("/admin/")
+    return render(request, 'adminlogin.html', {'form': form})
+
+def admin(request):
+    data_dict = {}
+    value = request.GET.get('q')
+    if value :
+        data_dict['username'] = value
+    queryset = UserLog.objects.filter(**data_dict)
+    #if request.method == 'GET':
+    #    queryset = UserLog.objects.all()
+    return render(request, 'admin.html', {"queryset": queryset})
