@@ -4,18 +4,30 @@ import torch.backends
 from torch.nn import CrossEntropyLoss
 from torchvision.models import vgg16
 from torchvision.transforms import transforms
-# from baal.bayesian.dropout import patch_module
-# from baal import ModelWrapper
+from baal.bayesian.dropout import patch_module
+from baal import ModelWrapper
 
 import numpy as np
 import matplotlib.pyplot as plt
 import os
-# from PIL import Image
+from PIL import Image
 import json
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-def run_predict(img_path,save_path):
+def normalize(img, mean, std):
+    img_array = np.array(img).astype(np.float32)
+    img1_mean, img1_std = img_array.mean(axis=(0, 1)), img_array.std(axis=(0, 1))
+    # 标准化图像
+    img_array = (img_array - img1_mean) / img1_std
+    img_array = img_array * std + mean
+    # 将数据类型转换回整型
+    img_array = np.clip(img_array, 0, 255).astype(np.uint8)
+    img_normalized = Image.fromarray(img_array)
+
+def run_predict(img_path,save_path1,save_path2):
+    mean = [187.74448, 95.00587, 23.374166]
+    std = [27.05076, 28.098957, 14.033631]
     # use_cuda = torch.cuda.is_available()
     torch.backends.cudnn.benchmark = True
     data_transform = transforms.Compose(
@@ -30,6 +42,9 @@ def run_predict(img_path,save_path):
     # img_path = "./Test/Images/drishtiGS_001.jpg"
     assert os.path.exists(img_path), "file: '{}' dose not exist.".format(img_path)
     img_init = Image.open(img_path)
+    img_init = normalize(img_init, mean, std)  # 标准化
+    img_init.save(save_path1)
+
     # [N, C, H, W]
     img = data_transform(img_init)
     img = torch.unsqueeze(img, dim=0)
@@ -96,7 +111,7 @@ def run_predict(img_path,save_path):
     ax.hist(data, bins=bins)
     plt.xlabel("Probablistic")
     plt.ylabel("iterations")
-    plt.savefig(save_path)
+    plt.savefig(save_path2)
     #plt.show()
     # 显示图形
 

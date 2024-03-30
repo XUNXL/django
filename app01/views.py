@@ -162,7 +162,8 @@ def upload(request):
     f.close()
     # print("process")
     probablistic, class_result, predict_entropy, max_mean_pro = run_predict(
-        "./app01/static/images/"+username+".jpg", "./app01/static/images/"+username+"_result.jpg")
+        "./app01/static/images/"+username+".jpg", "./app01/static/images/"+username+"_normalize.jpg",\
+        "./app01/static/images/"+username+"_result.jpg")
     print(probablistic)
     print(class_result)
     time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
