@@ -15,6 +15,7 @@ let newUrl1 = currentUrl.substring(0, secondLastSlashIndex + 1) + "submit/";
 let newUrl2 = currentUrl.substring(0, secondLastSlashIndex + 1) + "introduction/";
 let newUrl3 = currentUrl.substring(0, secondLastSlashIndex + 1) + "userlog/";
 
+//菜单跳转
 function turnTo(index) {
     if (index == 0) {
         window.location.href = newUrl;
@@ -26,15 +27,3 @@ function turnTo(index) {
         window.location.href = newUrl3;
     }
 }
-
-// 获取表体元素
-let tbody = document.querySelector(".table-group-divider");
-console.log(tbody);
-// 初始化行数计数器
-let rowCount = 0;
-
-// 添加每一行的序号
-tbody.querySelectorAll("tr").forEach(function (row) {
-    rowCount++;
-    row.querySelector("th").textContent = rowCount;
-});

@@ -8,11 +8,13 @@ body {
 }
 
 .search {
-    position: relative;
+    position: sticky;
+    top: 0;
     height: 56px;
     background-color: white;
     min-width: 1500px;
     box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1;
 }
 
 .name {
@@ -232,8 +234,7 @@ body {
 
 .inBox1,
 .inBox2,
-.inBox3,
-.inBox4 {
+.inBox3 {
     position: absolute;
     top: 60px;
     left: 20px;
@@ -283,14 +284,24 @@ body {
     background-color: #ccffce;
 }
 
+.inBox4 {
+    position: absolute;
+    top: 240px;
+    left: 20px;
+    width: 95%;
+    height: auto;
+}
+
 .result_picture,
 .result_font,
 .result_download {
     margin-bottom: 20px;
 }
 
-.result_picture span {
-    margin-right: 75px;
+.result_picture {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 
 .result_picture span img {
@@ -305,4 +316,67 @@ body {
 
 .result_download a:hover {
     color: #02ac08;
+}
+
+.img-thumbnail {
+    display: block;
+    max-width: 150px !important;
+    max-height: 150px !important;
+    min-width: 150px !important;
+    min-height: 150px !important;
+}
+
+.dots-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    width: 100%;
+}
+
+.dot {
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+    border-radius: 10px;
+    background-color: #b3d4fc;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+
+/* loader */
+.dot:last-child {
+    margin-right: 0;
+}
+
+.dot:nth-child(1) {
+    animation-delay: -0.3s;
+}
+
+.dot:nth-child(2) {
+    animation-delay: -0.1s;
+}
+
+.dot:nth-child(3) {
+    animation-delay: 0.1s;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.8);
+        background-color: #b3fce4;
+        box-shadow: 0 0 0 0 rgba(178, 212, 252, 0.7);
+    }
+
+    50% {
+        transform: scale(1.2);
+        background-color: #a5ffb9;
+        box-shadow: 0 0 0 10px rgba(178, 212, 252, 0);
+    }
+
+    100% {
+        transform: scale(0.8);
+        background-color: #b3fccf;
+        box-shadow: 0 0 0 0 rgba(178, 212, 252, 0.7);
+    }
 }

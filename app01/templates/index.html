@@ -9,7 +9,7 @@
     <title>青盲助诊-首页-个人信息</title>
     <link rel="stylesheet" type="text/css" href="../static/static/app01/csscode/index.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    <link href="../static/static/app01/bootstrap-5.3.0-alpha1-dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script type="text/javascript"
         src="../static/static/app01/bootstrap-5.3.0-alpha1-dist/js/bootstrap.bundle.js"></script>
@@ -179,9 +179,17 @@
                     fill="currentColor" class="bi bi-caret-right" viewBox="0 0 16 16">
                     <path
                         d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z" />
-                </svg>个人信息</div>
-            <div id="inBox" class="inBox">
-                <div class="alert alert-secondary" role="alert">
+                </svg>个人信息
+            </div>
+            <section class="dots-container" style="position: absolute;top:100px;">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </section>
+            <div id="inBox" class="inBox" style="display: none;">
+                <div class="alert alert-secondary global_username" role="alert">
                     用户名：{{ username }}
                 </div>
                 <div class="alert alert-secondary" role="alert">
@@ -201,6 +209,12 @@
     </div>
 </body>
 <script type="text/javascript" src="../static/static/app01/jscode/index.js">
+</script>
+<script>
+    setTimeout(() => {
+        document.querySelector(".inBox").style.display = "block";
+        document.querySelector(".dots-container").style.display = "none";
+    }, 500);
 </script>
 
 </html>

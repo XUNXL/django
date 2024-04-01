@@ -9,11 +9,10 @@
   <title>用户注册</title>
   <link rel="stylesheet" type="text/css" href="../static/static/app01/csscode/web.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+  <link href="../static/static/app01/bootstrap-5.3.0-alpha1-dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-/mhDoLbDldZc3qpsJHpLogda//BVZbgYuw6kof4u2FrCedxOtgRZDTHgHUhOCVim"
-    crossorigin="anonymous"></script>
+  <script type="text/javascript"
+    src="../static/static/app01/bootstrap-5.3.0-alpha1-dist/js/bootstrap.bundle.js"></script>
 </head>
 
 <body>
@@ -26,12 +25,13 @@
   <div class="bigbox">
     <div class="bigbox2">
       <div class="main">
+        <div style="color: #75a32b;font-size: 20px;">注册</div>
         <form method="post" action="/register/">
 
           {% csrf_token %}
           <div class="group">
             {{form.username}}
-            <span style="color:red;">{{form.username.errors.0}}</span>
+            <div style="color:red;">{{form.username.errors.0}}</div>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill"
               viewBox="0 0 16 16">
               <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
@@ -40,7 +40,7 @@
 
           <div class="group">
             {{form.mobile}}
-            <span style="color:red;">{{form.password.errors.0}}</span>
+            <div style="color:red;">{{form.password.errors.0}}</div>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-phone"
               viewBox="0 0 16 16">
               <path
@@ -51,7 +51,7 @@
 
           <div class="group">
             {{form.password}}
-            <span style="color:red;">{{form.password.errors.0}}</span>
+            <div style="color:red;">{{form.password.errors.0}}</div>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
               class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
               <path
@@ -63,7 +63,7 @@
           <div class="Password_Reminder" id="Password_Reminder"></div>
           <div class="group">
             {{form.confirm_password}}
-            <span style="color:red;">{{form.confirm_password.errors.0}}</span>
+            <div style="color:red;">{{form.confirm_password.errors.0}}</div>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
               class="bi bi-2-circle-fill" viewBox="0 0 16 16">
               <path
@@ -74,17 +74,17 @@
 
           <div class="group">
             {{form.birthdate}}
-            <span style="color:red;">{{form.username.errors.0}}</span>
+            <div style="color:red;">{{form.username.errors.0}}</div>
           </div>
 
           <div class="group">
             {{form.gender}}
-            <span style="color:red;">{{form.username.errors.0}}</span>
+            <div style="color:red;">{{form.username.errors.0}}</div>
           </div>
 
           <div class="submit">
             <input class="button" type="submit"
-              value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注册">
+              value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注册">
           </div>
         </form>
       </div>
