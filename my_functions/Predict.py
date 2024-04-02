@@ -4,13 +4,13 @@ import torch.backends
 from torch.nn import CrossEntropyLoss
 from torchvision.models import vgg16
 from torchvision.transforms import transforms
-# from baal.bayesian.dropout import patch_module
-# from baal import ModelWrapper
+from baal.bayesian.dropout import patch_module
+from baal import ModelWrapper
 
 import numpy as np
 import matplotlib.pyplot as plt
 import os
-# from PIL import Image
+from PIL import Image
 import json
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -26,6 +26,7 @@ def normalize(img, mean, std):
     # 将数据类型转换回整型
     img_array = np.clip(img_array, 0, 255).astype(np.uint8)
     img_normalized = Image.fromarray(img_array)
+    return img_normalized
 
 
 def run_predict(img_path, save_path1, save_path2):
@@ -47,6 +48,7 @@ def run_predict(img_path, save_path1, save_path2):
         img_path), "file: '{}' dose not exist.".format(img_path)
     img_init = Image.open(img_path)
     img_init = normalize(img_init, mean, std)  # 标准化
+    print(type(img_init))
     img_init.save(save_path1)
 
     # [N, C, H, W]
@@ -118,7 +120,9 @@ def run_predict(img_path, save_path1, save_path2):
     bins = np.linspace(0, 1, num=50)
     # 绘制直方图
     fig, ax = plt.subplots()
-    ax.hist(data, bins=bins)
+    n, bins, patches = ax.hist(data, bins=bins)
+    n = n.tolist()
+    bins = bins.tolist()
     plt.xlabel("Probablistic")
     plt.ylabel("iterations")
     plt.savefig(save_path2)
@@ -128,7 +132,7 @@ def run_predict(img_path, save_path1, save_path2):
     # plt.imshow(img_init)
     # plt.title(print_res)
     print(print_res)
-    return probablistic.item(), class_result, predic_entropy, max_mean_pro
+    return probablistic.item(), class_result, predic_entropy, max_mean_pro , n , bins
 
 
     # plt.show()

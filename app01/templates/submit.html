@@ -187,13 +187,16 @@
                                 d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z" />
                         </svg>上传图片
                     </div>
-                    <div class="submit_button1">
-                        <label for="file" class="SelectButton_another">选择文件</label>
-                        <input id="file" class="SelectButton" type="file" name="image">
-                    </div>
-                    <div class="submit_button2">
-                        <input class="submitButton" type="submit" value="上传图片">
-                    </div>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="submit_button1">
+                            <label for="file" class="SelectButton_another">选择文件</label>
+                            <input id="file" class="SelectButton" type="file" name="image">
+                        </div>
+                        <div class="submit_button2">
+                            <input class="submitButton" type="submit" value="上传图片">
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="inBox4">
@@ -252,14 +255,14 @@
                         </div>
                     </div>
                     <div class="picture_2">
-                        <img src="../static/images/{{ username }}_result.jpg " class="img-thumbnail" />
+                        <img src="../static/images/{{ username }}_normalize.jpg " class="img-thumbnail" />
                         <button type="button" class="btn btn-light picture2" data-bs-toggle="modal"
                             data-bs-target="#exampleModal">
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Result&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         </button>
                     </div>
                     <div class="picture_3">
-                        <img src="../static/images/{{ username }}_normalize.jpg " class="img-thumbnail" />
+                        <img src="../static/images/{{ username }}_result.jpg " class="img-thumbnail" />
                         <button type="button" class="btn btn-light picture3" data-bs-toggle="modal"
                             data-bs-target="#exampleModal">
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Normalize&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

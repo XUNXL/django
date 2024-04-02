@@ -155,17 +155,16 @@ def upload(request):
         return render(request, 'submit.html', {"username": username})
         # return redirect("/upload/")
     username = info["username"]
+    print("login")
     f = open('./app01/static/images/'+username+'.jpg', mode='wb')
     file_object = request.FILES.get('image')
     for chunk in file_object.chunks():
         f.write(chunk)
     f.close()
-    # print("process")
-    probablistic, class_result, predict_entropy, max_mean_pro = run_predict(
+    print("process")
+    probablistic, class_result, predict_entropy, max_mean_pro , n , bins = run_predict(
         "./app01/static/images/"+username+".jpg", "./app01/static/images/"+username+"_normalize.jpg",\
         "./app01/static/images/"+username+"_result.jpg")
-    print(probablistic)
-    print(class_result)
     time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     timesss = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
     if predict_entropy > 0.5048 or max_mean_pro < 0.8:
@@ -181,12 +180,12 @@ def upload(request):
     if trust == 'distrust':
         shutil.copy('./app01/static/images/'+username+'.jpg', './app01/saveimg/distrust/' +
                     username + timesss + '.jpg')
-        return render(request, 'result2.html', {"username": username})
+        return render(request, 'submit.html', {"username": username,"x":bins,"y":n})
     else:
         shutil.copy('./app01/static/images/' + username + '.jpg',
                     './app01/saveimg/trust/' + username + timesss + '.jpg')
-        return render(request, 'results.html',
-                      {"username": username, "probablistic": round(probablistic, 4), "class_result": class_result})
+        return render(request, 'submit.html',
+                       {"username": username, "probablistic": round(probablistic, 4), "class_result": class_result,"x":bins,"y":n})
     # t = Trainer("./userimg", './torch_model/model.pt', './torch_model/model_{}_{}.pt', img_save_path=r'./app01/templates/static')
     # t.segment(username+'.tif',username + '_result')
 
