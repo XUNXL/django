@@ -74,6 +74,7 @@ class LoginForm(forms.Form):
         required=True
     )
 
+
 class AdminLoginForm(forms.Form):
     username = forms.CharField(
         label='用户名',
@@ -154,16 +155,17 @@ def upload(request):
         username = info["username"]
         return render(request, 'submit.html', {"username": username})
         # return redirect("/upload/")
-    username = info["username"]
     print("login")
+    username = info["username"]
     f = open('./app01/static/images/'+username+'.jpg', mode='wb')
     file_object = request.FILES.get('image')
     for chunk in file_object.chunks():
         f.write(chunk)
     f.close()
     print("process")
-    probablistic, class_result, predict_entropy, max_mean_pro , n , bins = run_predict(
-        "./app01/static/images/"+username+".jpg", "./app01/static/images/"+username+"_normalize.jpg",\
+    probablistic, class_result, predict_entropy, max_mean_pro, n, bins = run_predict(
+        "./app01/static/images/"+username +
+        ".jpg", "./app01/static/images/"+username+"_normalize.jpg",
         "./app01/static/images/"+username+"_result.jpg")
     time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     timesss = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
@@ -178,14 +180,14 @@ def upload(request):
     elif class_result == 'Normal':
         class_result = '恭喜您，您的眼球健康状况良好'
     if trust == 'distrust':
-        shutil.copy('./app01/static/images/'+username+'.jpg', './app01/saveimg/distrust/' +
-                    username + timesss + '.jpg')
-        return render(request, 'submit.html', {"username": username,"x":bins,"y":n})
+        shutil.copy('./app01/static/images/' + username + '.jpg',
+                    './app01/saveimg/distrust/' + username + timesss + '.jpg')
+        return render(request, 'result.html', {"username": username, "time": time, "timesss": timesss, "x": bins, "y": n})
     else:
         shutil.copy('./app01/static/images/' + username + '.jpg',
                     './app01/saveimg/trust/' + username + timesss + '.jpg')
-        return render(request, 'submit.html',
-                       {"username": username, "probablistic": round(probablistic, 4), "class_result": class_result,"x":bins,"y":n})
+        return render(request, 'result.html',
+                      {"username": username, "probablistic": round(probablistic, 4), "time": time, "timesss": timesss, "class_result": class_result, "x": bins, "y": n})
     # t = Trainer("./userimg", './torch_model/model.pt', './torch_model/model_{}_{}.pt', img_save_path=r'./app01/templates/static')
     # t.segment(username+'.tif',username + '_result')
 
@@ -236,12 +238,19 @@ def adminlogin(request):
         return redirect("/admin/")
     return render(request, 'adminlogin.html', {'form': form})
 
+
 def admin(request):
     data_dict = {}
     value = request.GET.get('q')
-    if value :
+    if value:
         data_dict['username'] = value
     queryset = UserLog.objects.filter(**data_dict)
-    #if request.method == 'GET':
+    # if request.method == 'GET':
     #    queryset = UserLog.objects.all()
     return render(request, 'admin.html', {"queryset": queryset})
+
+
+def result(request):
+    info = request.session.get("info")
+    username = info["username"]
+    return render(request, 'result.html', {"username": username})

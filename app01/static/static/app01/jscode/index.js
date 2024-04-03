@@ -14,6 +14,7 @@ let newUrl = currentUrl.substring(0, secondLastSlashIndex + 1) + "index/";
 let newUrl1 = currentUrl.substring(0, secondLastSlashIndex + 1) + "submit/";
 let newUrl2 = currentUrl.substring(0, secondLastSlashIndex + 1) + "introduction/";
 let newUrl3 = currentUrl.substring(0, secondLastSlashIndex + 1) + "userlog/";
+let newUrl4 = currentUrl.substring(0, secondLastSlashIndex + 1) + "result/";
 
 //菜单跳转
 function turnTo(index) {
@@ -25,5 +26,7 @@ function turnTo(index) {
         window.location.href = newUrl2;
     } else if (index == 3) {
         window.location.href = newUrl3;
+    } else if (index == 4) {
+        window.location.href = newUrl4;
     }
 }

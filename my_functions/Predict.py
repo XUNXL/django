@@ -132,7 +132,7 @@ def run_predict(img_path, save_path1, save_path2):
     # plt.imshow(img_init)
     # plt.title(print_res)
     print(print_res)
-    return probablistic.item(), class_result, predic_entropy, max_mean_pro , n , bins
+    return probablistic.item(), class_result, predic_entropy, max_mean_pro, n, bins
 
 
     # plt.show()
