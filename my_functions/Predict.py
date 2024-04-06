@@ -13,6 +13,10 @@ import os
 from PIL import Image
 import json
 
+# from pytorch_grad_cam.utils.model_targets import ClassifierOutputTarget
+# from pytorch_grad_cam import GradCAM
+import cv2
+
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 
@@ -73,6 +77,7 @@ def run_predict(img_path, save_path1, save_path2):
     # 加载权重
     checkpoint = torch.load(weights_path, map_location='cpu')
     model.load_state_dict(checkpoint['model'])
+    model_grad = model
     print("load pth")
     # dropout层 改成 MCDropout
     model = patch_module(model)
@@ -123,9 +128,37 @@ def run_predict(img_path, save_path1, save_path2):
     n, bins, patches = ax.hist(data, bins=bins)
     n = n.tolist()
     bins = bins.tolist()
-    plt.xlabel("Probablistic")
-    plt.ylabel("iterations")
-    plt.savefig(save_path2)
+    # plt.xlabel("Probablistic")
+    # plt.ylabel("iterations")
+    # plt.savefig(save_path2)
+    if max_mean_indices[0].item() == 1:
+        targets = [ClassifierOutputTarget(0)]  # 括号内输出要分析的类别，即预测结果
+    else:
+        targets = [ClassifierOutputTarget(1)]
+
+    targets = [ClassifierOutputTarget(1)]
+    target_layers = [model_grad.features[23]]
+    cam = GradCAM(model=model_grad, target_layers=target_layers)
+
+    cam_map = cam(input_tensor=img, targets=targets)[0]  # 不加平滑
+
+    import torchcam
+    from torchcam.utils import overlay_mask
+
+    result = overlay_mask(img_init, Image.fromarray(
+        cam_map), alpha=0.6)  # alpha越小，原图越淡
+    result.save(save_path2)
+    # plt.subplot(1, 2, 1)
+    # plt.imshow(img_init)  # Assuming X is of shape (1, 1, H, W)
+    # plt.axis('off')
+    # plt.title("origin_pricture")
+    #
+    # plt.subplot(1, 2, 2)
+    # plt.imshow(result)
+    # plt.axis('off')
+    # plt.title("grad_cam")
+    # plt.show()
+    # print("分类结果为：{}".format(class_indict[str(max_mean_indices[0].numpy())]))
     # plt.show()
     # 显示图形
 
