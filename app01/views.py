@@ -147,10 +147,6 @@ def userinfo(request):
     return render(request, 'index.html', {"username": username, "gender": gender, "birthdate": birthdate, "mobile": mobile, "age": age})
 
 
-x = []
-y = []
-
-
 def upload(request):
     info = request.session.get("info")
     if not info:
@@ -173,10 +169,12 @@ def upload(request):
         "./app01/static/images/"+username+"_result.jpg")
     time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     timesss = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
-    global x
-    global y
+    x = []
+    y = []
     x = bins
     y = n
+    request.session["x"] = x
+    request.session["y"] = y
     if predict_entropy > 0.5048 or max_mean_pro < 0.8:
         trust = 'distrust'
     else:
@@ -261,9 +259,9 @@ def admin(request):
 def result(request):
     info = request.session.get("info")
     username = info["username"]
-    global x
-    global y
     time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    x = request.session.get('x', [])
+    y = request.session.get('y', [])
     # x_text = ["1", "2", "3", "4", "5", "6"]
     # y_text = ["100", "200", "151", "220", "210", "90"] 测试数据
     return render(request, 'result.html', {"username": username, "x": x, "y": y, "time": time})
